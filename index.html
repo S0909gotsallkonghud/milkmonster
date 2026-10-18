@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MILKMONSTER</title>
+
+<style>
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #f1f5f9;
+}
+
+header {
+  background: blue;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  border: 2px solid black;
+  border-radius: 30px;
+}
+
+.menu {
+  max-width: 500px;
+  margin: auto;
+  padding-bottom: 120px;
+}
+
+.category {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.item {
+  background: white;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid black;
+}
+
+button {
+  background: #2a9d8f;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 60px;
+  margin-left: 5px;
+  transition: 0.15s;
+  cursor:pointer;
+}
+
+button:active{
+  transform: scale(0.93);
+}
+
+button:hover{
+  filter: brightness(1.1);
+  box-shadow: 0 0 12px rgba(0,0,0,.15);
+}
+
+.cart {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 500px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 10px;
+  border-radius: 30px ;
+  border-top: 1px solid #ccc;
+  border:2px solid black;
+}
+
+.item div {
+  display: flex;
+  gap: 5px;
+}
+
+.bth-group {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.sweetness {
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.category-nav {
+  max-width: 500px;
+  margin: 10px auto;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 5px;
+}
+
+.category-nav button {
+  min-width: 120px;
+  background: white;
+  color: #0866d8;
+  border: 2px solid #0866d8;
+  border-radius: 25px;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.category-nav button.active {
+  background: #0866d8;
+  color: white;
+}
+
+.table{
+  border-radius: 30px;
+  border: 2px solid black;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>MILKMONSTER</h1>
+  <P>หอมหวาน สดใหม่ ทุกวัน</P>
+</header>
+
+<div class="category-nav">
+
+  <button onclick="showCategory('ยอดนิยม')">
+    เมนูยอดนิยม
+  </button>
+
+  <button onclick="showCategory('เครื่องดื่ม')">
+    เครื่องดื่ม
+  </button>
+
+  <button onclick="showCategory('ขนมปัง')">
+    ขนมปัง
+  </button>
+
+  <button onclick="showCategory('ปังเย็น')">
+    ปังเย็น
+  </button>
+
+</div>
+
+<div class="menu">
+
+  <div class="category"> เมนูยอดนิยม </div>
+  <div class="item">
+    <span>นมสดร้อน</span>
+    <span>30 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดร้อน', this)">-</button>
+    <button onclick="addDrink('นมสดร้อน', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดเย็น</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดเย็น', this)">-</button>
+    <button onclick="addDrink('นมสดเย็น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดปีโป้เย็น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดปีโป้เย็น', this)">-</button>
+    <button onclick="addDrink('นมสดปีโป้เย็น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดปีโป้ปั่น</span>
+    <span>55 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>       
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดปีโป้ปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดปีโป้ปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาไทยเย็น</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาไทยเย็น', this)">-</button>
+    <button onclick="addDrink('ชาไทยเย็น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาพีชเย็น</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาพีชเย็น', this)">-</button>
+    <button onclick="addDrink('ชาพีชเย็น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดสตอเบอรี่เย็น</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดสตอเบอรี่เย็น', this)">-</button>
+    <button onclick="addDrink('นมสดสตอเบอรี่เย็น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ไมโลโรงเรียนปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ไมโลโรงเรียนปั่น', this)">-</button>
+    <button onclick="addDrink('ไมโลโรงเรียนปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ช็อคโกบานาน่า</span>
+    <span>60 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ช็อคโกบานาน่า', this)">-</button>
+    <button onclick="addDrink('ช็อคโกบานาน่า', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>m150 + ปีโป้ปั่น</span>
+    <span>55 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('m150 + ปีโป้ปั่น', this)">-</button>
+    <button onclick="addDrink('m150 + ปีโป้ปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดโอริโอ้ปั่น</span>
+    <span>55 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดโอริโอ้ปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดโอริโอ้ปั่น', this)">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูเครื่องดื่มร้อน </div>
+  <div class="item">
+    <span>นมสดตุ๋น(ร้อน)</span>
+    <span>30 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดตุ๋น(ร้อน)', this)">-</button>
+    <button onclick="addDrink('นมสดตุ๋น(ร้อน)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดคาราเมล(ร้อน)</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select> 
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดคาราเมล(ร้อน)', this)">-</button>
+    <button onclick="addDrink('นมสดคาราเมล(ร้อน)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดน้ำผึ้ง(ร้อน)</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดน้ำผึ้ง(ร้อน)', this)">-</button>
+    <button onclick="addDrink('นมสดน้ำผึ้ง(ร้อน)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดช็อคโก(ร้อน)</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>   
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดช็อคโก(ร้อน)', this)">-</button>
+    <button onclick="addDrink('นมสดช็อคโก(ร้อน)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ไมโล(ร้อน)</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ไมโล(ร้อน)', this)">-</button>
+    <button onclick="addDrink('ไมโล(ร้อน)', this)">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูเครื่องดื่มเย็น </div>
+  <div class="item">
+    <span>นมสดตุ๋น(เย็น)</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดตุ๋น(เย็น)', this)">-</button>
+    <button onclick="addDrink('นมสดตุ๋น(เย็น)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดปีโป้</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดปีโป้', this)">-</button>
+    <button onclick="addDrink('นมสดปีโป้', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดคาราเมล(เย็น)</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดคาราเมล(เย็น)', this)">-</button>
+    <button onclick="addDrink('นมสดคาราเมล(เย็น)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดน้ำผึ้ง(เย็น)</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดน้ำผึ้ง(เย็น)', this)">-</button>
+    <button onclick="addDrink('นมสดน้ำผึ้ง(เย็น)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดช็อคโก(เย็น)</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดช็อคโก(เย็น)', this)">-</button>
+    <button onclick="addDrink('นมสดช็อคโก(เย็น)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ไมโล(เย็น)</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ไมโล(เย็น)', this)">-</button>
+    <button onclick="addDrink('ไมโล(เย็น)', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมชมพู</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมชมพู', this)">-</button>
+    <button onclick="addDrink('นมชมพู', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดสตอเบอรี่</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดสตอเบอรี่', this)">-</button>
+    <button onclick="addDrink('นมสดสตอเบอรี่', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาเขียว</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาเขียว', this)">-</button>
+    <button onclick="addDrink('ชาเขียว', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาไทย</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาไทย', this)">-</button>
+    <button onclick="addDrink('ชาไทย', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชามะนาว</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชามะนาว', this)">-</button>
+    <button onclick="addDrink('ชามะนาว', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาเขียวฮันนี่เลม่อน</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาเขียวฮันนี่เลม่อน', this)">-</button>
+    <button onclick="addDrink('ชาเขียวฮันนี่เลม่อน', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาเนสที</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาเนสที', this)">-</button>
+    <button onclick="addDrink('ชาเนสที', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาพีช</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาพีช', this)">-</button>
+    <button onclick="addDrink('ชาพีช', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>โกโก้</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('โกโก้', this)">-</button>
+    <button onclick="addDrink('โกโก้', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ช็อคโก</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ช็อคโก', this)">-</button>
+    <button onclick="addDrink('ช็อคโก', this)">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูเครื่องดื่มโซดา </div>
+  <div class="item">
+    <span>บลูฮาวายโซดา</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('บลูฮาวายโซดา', this)">-</button>
+    <button onclick="addDrink('บลูฮาวายโซดา', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>สตอเบอรี่โซดา</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('สตอเบอรี่โซดา', this)">-</button>
+    <button onclick="addDrink('สตอเบอรี่โซดา', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ฮันนี่เลม่อนโซดา</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ฮันนี่เลม่อนโซดา', this)">-</button>
+    <button onclick="addDrink('ฮันนี่เลม่อนโซดา', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>น้ำบ๊วยฮันนี่เลม่อน</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('น้ำบ๊วยฮันนี่เลม่อน', this)">-</button>
+    <button onclick="addDrink('น้ำบ๊วยฮันนี่เลม่อน', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>เสาวรสโซดา</span>
+    <span>40 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('เสาวรสโซดา', this)">-</button>
+    <button onclick="addDrink('เสาวรสโซดา', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>พีชโซดา</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('พีชโซดา', this)">-</button>
+    <button onclick="addDrink('พีชโซดา', this)">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูปั่นสมูทตี้ </div> 
+  <div class="item">
+    <span>นมสดตุ๋นปั่น</span>
+    <span>45 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดตุ๋นปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดตุ๋นปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดคาราเมลปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดคาราเมลปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดคาราเมลปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดน้ำผึ้ง</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดน้ำผึ้ง', this)">-</button>
+    <button onclick="addDrink('นมสดน้ำผึ้ง', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดช็อคโกปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดช็อคโกปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดช็อคโกปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ไมโลโรงเรียนปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ไมโลโรงเรียนปั่น', this)">-</button>
+    <button onclick="addDrink('ไมโลโรงเรียนปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมชมพูปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมชมพูปั่น', this)">-</button>
+    <button onclick="addDrink('นมชมพูปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดสตอเบอรี่ปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดสตอเบอรี่ปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดสตอเบอรี่ปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาเขียวปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาเขียวปั่น', this)">-</button>
+    <button onclick="addDrink('ชาเขียวปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาไทยปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาไทยปั่น', this)">-</button>
+    <button onclick="addDrink('ชาไทยปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ช็อคโกปั่น</span>
+    <span>60 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ช็อคโกปั่น', this)">-</button>
+    <button onclick="addDrink('ช็อคโกปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ชาเนสทีปั่น</span>
+    <span>50 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ชาเนสทีปั่น', this)">-</button>
+    <button onclick="addDrink('ชาเนสทีปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>นมสดโอริโอ้ปั่น</span>
+    <span>55 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('นมสดโอริโอ้ปั่น', this)">-</button>
+    <button onclick="addDrink('นมสดโอริโอ้ปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>M150+ปีโป้ปั่น</span>
+    <span>55 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('M150+ปีโป้ปั่น', this)">-</button>
+    <button onclick="addDrink('M150+ปีโป้ปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ช็อคโกบานาน่าปั่น</span>
+    <span>65 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ช็อคโกบานาน่าปั่น', this)">-</button>
+    <button onclick="addDrink('ช็อคโกบานาน่าปั่น', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ช็อคโกโอรืโอ้ปั่น</span>
+    <span>65 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ช็อคโกโอรืโอ้ปั่น', this)">-</button>
+    <button onclick="addDrink('ช็อคโกโอรืโอ้ปั่น', this)">+</button>
+    </div>
+  </div>
+  
+  <div class="category"> เมนูโยเกิร์ตสมูทตี้ </div>
+  <div class="item">
+    <span>สตอเบอรี่โยเกิร์ต</span>
+    <span>60 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('สตอเบอรี่โยเกิร์ต', this)">-</button>
+    <button onclick="addDrink('สตอเบอรี่โยเกิร์ต', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>โอริโอ้โยเกิร์ต</span>
+    <span>60 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('โอริโอ้โยเกิร์ต', this)">-</button>
+    <button onclick="addDrink('โอริโอ้โยเกิร์ต', this)">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ฮันนี่โยเกิร์ต</span>
+    <span>60 บาท</span>
+    <select class="sweetness">
+      <option value="25%">25%</option>
+      <option value="50%">50%</option>
+      <option value="100%">100%</option>
+    </select>
+    <div class="bth-group">
+    <button onclick="removeDrink('ฮันนี่โยเกิร์ต', this)">-</button>
+    <button onclick="addDrink('ฮันนี่โยเกิร์ต', this)">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูเหล้าถัง </div>
+  <div class="item">
+    <span>แกไม่รอดแน่</span>
+    <span>159 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('แกไม่รอดแน่')">-</button>
+    <button onclick="add('แกไม่รอดแน่')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>สาดไปสมาชิก</span>
+    <span>159 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('สาดไปสมาชิก')">-</button>
+    <button onclick="add('สาดไปสมาชิก')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>เมื่อกี้ว่าไงนะ</span>
+    <span>159 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('เมื่อกี้ว่าไงนะ')">-</button>
+    <button onclick="add('เมื่อกี้ว่าไงนะ')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>พาฉันกลับบ้านที</span>
+    <span>159 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('พาฉันกลับบ้านที')">-</button>
+    <button onclick="add('พาฉันกลับบ้านที')">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูขนมปัง </div>
+  <div class="item">
+    <span>ขนมปังเนยนม</span>
+    <span>29 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังเนยนม')">-</button>
+    <button onclick="add('ขนมปังเนยนม')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังเนยนมน้ำตาล</span>
+    <span>29 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังเนยนมน้ำตาล')">-</button>
+    <button onclick="add('ขนมปังเนยนมน้ำตาล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังเนยนม+กล้วย</span>
+    <span>35 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังเนยนม+กล้วย')">-</button>
+    <button onclick="add('ขนมปังเนยนม+กล้วย')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังช็อคโกแลต</span>
+    <span>35 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังช็อคโกแลต')">-</button>
+    <button onclick="add('ขนมปังช็อคโกแลต')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังกล้วย+ช็อคโกแลต</span>
+    <span>40 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังกล้วย+ช็อคโกแลต')">-</button>
+    <button onclick="add('ขนมปังกล้วย+ช็อคโกแลต')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังไมโล</span>
+    <span>40 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังไมโล')">-</button>
+    <button onclick="add('ขนมปังไมโล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังสตอเบอรี่โฮมเมด</span>
+    <span>40 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังสตอเบอรี่โฮมเมด')">-</button>
+    <button onclick="add('ขนมปังสตอเบอรี่โฮมเมด')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังสตอเบอรี่โฮมเมดครัมเบิ้ล</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังสตอเบอรี่โฮมเมดครัมเบิ้ล')">-</button>
+    <button onclick="add('ขนมปังสตอเบอรี่โฮมเมดครัมเบิ้ล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังนมโฮมเมด</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังนมโฮมเมด')">-</button>
+    <button onclick="add('ขนมปังนมโฮมเมด')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังสังขยาใบเตยโฮมเมด</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังสังขยาใบเตยโฮมเมด')">-</button>
+    <button onclick="add('ขนมปังสังขยาใบเตยโฮมเมด')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังสังขยาโฮมเมด+ครัมเบิ้ล</span>
+    <span>50 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังสังขยาโฮมเมด+ครัมเบิ้ล')">-</button>
+    <button onclick="add('ขนมปังสังขยาโฮมเมด+ครัมเบิ้ล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังสังขยาชาไทยโฮมเมด</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังสังขยาชาไทยโฮมเมด')">-</button>
+    <button onclick="add('ขนมปังสังขยาชาไทยโฮมเมด')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังขยาทูโทน</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังขยาทูโทน')">-</button>
+    <button onclick="add('ขนมปังขยาทูโทน')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังนูเทลล่า</span>
+    <span>50 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังนูเทลล่า')">-</button>
+    <button onclick="add('ขนมปังนูเทลล่า')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังนูเทลล่า+กล้วย</span>
+    <span>55 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังนูเทลล่า+กล้วย')">-</button>
+    <button onclick="add('ขนมปังนูเทลล่า+กล้วย')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังเนยถั่ว</span>
+    <span>40 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังเนยถั่ว')">-</button>
+    <button onclick="add('ขนมปังเนยถั่ว')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังเนยถั่ว+กล้วย</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังเนยถั่ว+กล้วย')">-</button>
+    <button onclick="add('ขนมปังเนยถั่ว+กล้วย')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังBISCOFF</span>
+    <span>50 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังBISCOFF')">-</button>
+    <button onclick="add('ขนมปังBISCOFF')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังBISCOFF+กล้วย</span>
+    <span>55 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังBISCOFF+กล้วย')">-</button>
+    <button onclick="add('ขนมปังBISCOFF+กล้วย')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังหมูหยองนม</span>
+    <span>40 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังหมูหยองนม')">-</button>
+    <button onclick="add('ขนมปังหมูหยองนม')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังหมูหยองพริกเผา</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังหมูหยองพริกเผา')">-</button>
+    <button onclick="add('ขนมปังหมูหยองพริกเผา')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังวิปนม</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังวิปนม')">-</button>
+    <button onclick="add('ขนมปังวิปนม')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังวิปคาราเมล</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังวิปคาราเมล')">-</button>
+    <button onclick="add('ขนมปังวิปคาราเมล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังวิปช็อคโกแลต</span>
+    <span>45 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังวิปช็อคโกแลต')">-</button>
+    <button onclick="add('ขนมปังวิปช็อคโกแลต')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังวิปแยมสตอเบอรี่</span>
+    <span>50 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังวิปแยมสตอเบอรี่')">-</button>
+    <button onclick="add('ขนมปังวิปแยมสตอเบอรี่')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังวิปโอริโอ้</span>
+    <span>50 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังวิปโอริโอ้')">-</button>
+    <button onclick="add('ขนมปังวิปโอริโอ้')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังวิปไมโล</span>
+    <span>50 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังวิปไมโล')">-</button>
+    <button onclick="add('ขนมปังวิปไมโล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังBISCOFF CRUMBLE</span>
+    <span>60 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังBISCOFF CRUMBLE')">-</button>
+    <button onclick="add('ขนมปังBISCOFF CRUMBLE')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังสตอเบอรี่ครีมครัมเบิ้ล</span>
+    <span>60 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังสตอเบอรี่ครีมครัมเบิ้ล')">-</button>
+    <button onclick="add('ขนมปังสตอเบอรี่ครีมครัมเบิ้ล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังBISCOFF CRUMBLE ครีมนม</span>
+    <span>60 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังBISCOFF CRUMBLE ครีมนม')">-</button>
+    <button onclick="add('ขนมปังBISCOFF CRUMBLE ครีมนม')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ขนมปังปิ้งบานอฟฟี่</span>
+    <span>55 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ขนมปังปิ้งบานอฟฟี่')">-</button>
+    <button onclick="add('ขนมปังปิ้งบานอฟฟี่')">+</button>
+    </div>
+  </div>
+
+  <div class="category"> เมนูปังเย็น </div>
+  <div class="item">
+    <span>ปังเย็นชาไทย</span>
+    <span>89 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ปังเย็นชาไทย')">-</button>
+    <button onclick="add('ปังเย็นชาไทย')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ปังเย็นโอริโอ้</span>
+    <span>89 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ปังเย็นโอริโอ้')">-</button>
+    <button onclick="add('ปังเย็นโอริโอ้')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ปังเย็นไมโล</span>
+    <span>89 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ปังเย็นไมโล')">-</button>
+    <button onclick="add('ปังเย็นไมโล')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ปังเย็นช็อคโก</span>
+    <span>89 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ปังเย็นช็อคโก')">-</button>
+    <button onclick="add('ปังเย็นช็อคโก')">+</button>
+    </div>
+  </div>
+  <div class="item">
+    <span>ปังเย็นนมชมพู</span>
+    <span>89 บาท</span>
+    <div class="bth-group">
+    <button onclick="remove('ปังเย็นนมชมพู')">-</button>
+    <button onclick="add('ปังเย็นนมชมพู')">+</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="cart">
+  <span id="list">ยังไม่ได้เลือก</span><br><br>
+  <input type="text" id="table" placeholder="ใส่เลขโต๊ะ" />
+  <button onclick="order()">สั่งอาหาร</button>
+</div>
+
+<script>
+let cart = {};
+
+let currentCategory = "อาหารจานหลัก";
+
+function setupCategories(){
+
+  let current = "";
+
+  let items = document.querySelector(".menu").children;
+
+  for(let element of items){
+
+    if(element.classList.contains("category")){
+
+      let name = element.innerText.trim();
+
+      if(name.includes("เมนูยอดนิยม")){
+        current = "ยอดนิยม";
+      }
+
+      else if(
+        name.includes("เมนูเครื่องดื่มร้อน") ||
+        name.includes("เมนูเครื่องดื่มเย็น") ||
+        name.includes("เมนูเครื่องดื่มโซดา") ||
+        name.includes("เมนูปั่นสมูทตี้") ||
+        name.includes("เมนูโยเกิร์ตสมูทตี้") ||
+        name.includes("เมนูเหล้าถัง")
+      ){
+        current = "เครื่องดื่ม";
+      }
+
+      else if(name.includes("เมนูขนมปัง")){
+        current = "ขนมปัง";
+      }
+
+      else if(name.includes("เมนูปังเย็น")){
+        current = "ปังเย็น";
+      }
+
+      element.dataset.category = current;
+
+    }
+
+    else if(element.classList.contains("item")){
+
+      element.dataset.category = current;
+
+    }
+  }
+
+  showCategory("ยอดนิยม");
+}
+
+function showCategory(category){
+
+  currentCategory = category;
+
+  let elements =
+    document.querySelector(".menu").children;
+
+  for(let element of elements){
+
+    if(
+      element.classList.contains("category") ||
+      element.classList.contains("item")
+    ){
+
+      if(element.dataset.category === category){
+        element.style.display = "";
+      } else {
+        element.style.display = "none";
+      }
+
+    }
+  }
+}
+
+function add(item){
+  if(cart[item]){
+    cart[item]++;
+  } else {
+    cart[item] = 1;
+  }
+  updateCart();
+}
+
+function addDrink(item, button){
+
+  let sweetness =
+    button.closest(".item").querySelector(".sweetness").value;
+
+  if(!cart[item]){
+    cart[item] = {};
+  }
+
+  if(!cart[item][sweetness]){
+    cart[item][sweetness] = 0;
+  }
+
+  cart[item][sweetness]++;
+
+  updateCart();
+}
+
+function remove(item){
+
+  if(cart[item]){
+
+    cart[item]--;
+
+    if(cart[item] <= 0){
+      delete cart[item];
+    }
+  }
+
+  updateCart();
+}
+
+
+function removeDrink(item, button){
+
+  let sweetness =
+    button.closest(".item").querySelector(".sweetness").value;
+
+  if(cart[item] && cart[item][sweetness]){
+
+    cart[item][sweetness]--;
+
+    if(cart[item][sweetness] <= 0){
+      delete cart[item][sweetness];
+    }
+
+    if(Object.keys(cart[item]).length === 0){
+      delete cart[item];
+    }
+  }
+
+  updateCart();
+}
+
+function updateCart(){
+
+  let text = "";
+  for(let item in cart){
+    if(typeof cart[item] === "object"){
+      for(let sweetness in cart[item]){
+
+        text += item +
+                " (" + sweetness + ")" +
+                " x" + cart[item][sweetness] +
+                ", ";
+      }
+
+    } else {
+
+      text += item +
+              " x" + cart[item] +
+              ", ";
+    }
+  }
+
+  if(text === ""){
+    text = "ยังไม่ได้เลือก";
+  }
+
+  document.getElementById("list").innerText = text;
+}
+
+
+function getMenuPrices() {
+  const prices = {};
+
+  document.querySelectorAll(".menu .item").forEach(item => {
+    const spans = item.querySelectorAll(":scope > span");
+
+    if (spans.length < 2) return;
+
+    const name = spans[0].innerText.trim();
+    const priceText = spans[1].innerText;
+    const match = priceText.match(/[\d.]+/);
+
+    if (match) {
+      prices[name] = Number(match[0]);
+    }
+  });
+
+  return prices;
+}
+
+
+function order(){
+  let table = document.getElementById("table").value;
+
+  if(table === ""){
+    alert("กรุณาใส่เลขโต๊ะก่อน");
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbzy4d4Xd9qrLGsrzTRd1mioRfv4U42kmTkPK_8LOCniaUAdoGiYfUWcDPBTCBFP6pAk/exec", {
+    method: "post",
+    body: JSON.stringify({
+      table: table,
+      order: cart,
+      prices: getMenuPrices()
+    })
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("สั่งอาหารเรียบร้อยแล้ว✅");
+    cart = {};
+    updateCart();
+  })
+  .catch(err => {
+    alert("ผิดพลาด❌");
+    console.log(err);
+  });
+}
+
+setupCategories();
+</script>
+
+</body>
+</html>
